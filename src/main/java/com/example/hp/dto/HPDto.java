@@ -1,5 +1,6 @@
 package com.example.hp.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class HPDto {
+public class HPDto implements Serializable {
+
+	private static final long serialVersionUID = 2179848382333252018L;
+	
 	private Long id;
 	private String name;
 	private LocalDate bornDate;

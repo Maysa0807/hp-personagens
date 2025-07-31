@@ -11,7 +11,7 @@ public class RequestsExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ExceptionDTO> threat404(){
-        ExceptionDTO response = new ExceptionDTO("Data not found with provided ID", 404);
+        ExceptionDTO response = new ExceptionDTO("Data not found with provided ID",Integer.valueOf(404));
         return ResponseEntity.badRequest().body(response);
     }
 }

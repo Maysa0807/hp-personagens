@@ -26,7 +26,6 @@ public class HPService {
 
 	@Transactional
 	public List<HPDto> filtro(String nome, String house) {
-
 		return hpMapper
 				.entitiesToDtos(hpRepository.findByNameContainingIgnoreCaseOrHouseContainingIgnoreCase(nome, house));
 	}
