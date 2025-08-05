@@ -20,7 +20,7 @@ Uma aplicação completa com backend em Java Spring Boot e frontend em Angular p
 - Java 21
 - Spring Boot
 - Spring Data JPA
-- PgAdmin 4
+- PostgreSQL
 - Maven
 
 ### Frontend
