@@ -20,11 +20,11 @@ Uma aplicação completa com backend em Java Spring Boot e frontend em Angular p
 - Java 21
 - Spring Boot
 - Spring Data JPA
-- PostgreSQL
+- PgAdmin 4
 - Maven
 
 ### Frontend
-- Angular 17
+- Angular 19
 - Bootstrap 
 - HTML + CSS + TypeScript
 
