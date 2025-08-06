@@ -30,7 +30,7 @@ public class OAuth2ResourceServerSecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((authorize) -> authorize
-						//.requestMatchers("/personagens/filtro**").permitAll()
+						.requestMatchers("/personagens/filtro**").permitAll()
 						.anyRequest().authenticated()
 					//.anyRequest().permitAll()
 				)
