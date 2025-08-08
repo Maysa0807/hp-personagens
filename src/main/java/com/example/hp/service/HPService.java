@@ -1,5 +1,6 @@
 package com.example.hp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,7 +13,9 @@ import com.example.hp.dto.EmailRecordDto;
 import com.example.hp.dto.HPDto;
 import com.example.hp.mapper.HPMapper;
 import com.example.hp.producers.UserProducer;
+import com.example.hp.repository.FavoriteRepository;
 import com.example.hp.repository.HPRepository;
+import com.example.hp.util.AuthUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -20,8 +23,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class HPService {
 	private final HPRepository hpRepository;
+	private final FavoriteRepository favoriteRepository;
 	private final HPMapper hpMapper;
 	private final UserProducer userProducer;
+	
 
 	@Transactional
 	public List<HPDto> getHP() {
@@ -30,8 +35,14 @@ public class HPService {
 
 	@Transactional
 	public List<HPDto> filtro(String nome, String house) {
-		return hpMapper
-				.entitiesToDtos(hpRepository.findByNameContainingIgnoreCaseOrHouseContainingIgnoreCase(nome, house));
+		
+		List<HPDto> dtos = hpMapper.entitiesToDtos(hpRepository.findByNameContainingIgnoreCaseOrHouseContainingIgnoreCase(nome, house));
+		
+		for (HPDto dto : dtos) {
+			dto.setFavorito(favoriteRepository.existsByUserIdAndCharacterId(AuthUtil.getUserId(), dto.getId()));
+		}
+		
+		return dtos;
 	}
 	
 	

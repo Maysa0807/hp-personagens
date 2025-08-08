@@ -25,5 +25,6 @@ public class HPDto implements Serializable {
 	private String base64Img;
 	private String varinha;
 	private String patrono;
+	private boolean favorito;
 
 }

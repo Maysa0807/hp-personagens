@@ -45,6 +45,7 @@ public class HPController {
 			@RequestParam(required = false) String house, @AuthenticationPrincipal Jwt jwt) {		
 		
 		hpService.validarPrimeiroLogin(jwt);
+		
 		return ResponseEntity.ok(hpService.filtro(name, house));
 	}
 	
