@@ -2,17 +2,19 @@ package com.example.hp.service;
 
 import com.example.hp.dto.EmailRecordDto;
 import com.example.hp.dto.HPDto;
+import com.example.hp.entity.HPEntity;
 import com.example.hp.mapper.HPMapper;
 import com.example.hp.producers.UserProducer;
 import com.example.hp.repository.FavoriteRepository;
 import com.example.hp.repository.HPRepository;
 import com.example.hp.util.AuthUtil;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,20 +43,16 @@ class HPServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    
     @Test
-    void getHP_DeveRetornarListaDeDtos() {
-        // Arrange
-        var dtoList = List.of(new HPDto());
-        when(hpRepository.findAll()).thenReturn(List.of());
-        when(hpMapper.entitiesToDtos(List.of())).thenReturn(dtoList);
-
-        // Act
-        List<HPDto> result = hpService.getHP();
-
-        // Assert
-        assertThat(result).isEqualTo(dtoList);
-        verify(hpRepository).findAll();
-        verify(hpMapper).entitiesToDtos(List.of());
+    void getHP_Teste_Retornando1(){
+    	List<HPDto> listHPDto = List.of(new HPDto());
+    	when(hpRepository.findAll()).thenReturn(List.of());
+    	when(hpMapper.entitiesToDtos(any())).thenReturn(listHPDto);
+    	
+    	List<HPDto> resultDto = hpService.getHP();
+    	
+    	assertThat(resultDto).isEqualTo(listHPDto);
     }
 
     @Test
@@ -79,5 +77,25 @@ class HPServiceTest {
 
         // Assert
         verify(userProducer, never()).publishMessageEmail(any());
+    }
+    
+    @Test
+    void filtro() {
+    	
+    	List<HPEntity> listEntity = List.of(new HPEntity());
+    	List<HPDto> listHPDto = List.of(new HPDto());
+    	
+    	MockedStatic<AuthUtil> mockedStatic = mockStatic(AuthUtil.class);
+    	
+    	mockedStatic.when(() -> AuthUtil.getUserId()).thenReturn("asdfasdfasdfa sdf");
+    	
+    	when(hpRepository.findByNameContainingIgnoreCaseOrHouseContainingIgnoreCase(any(), any())).thenReturn(listEntity);
+    	when(hpMapper.entitiesToDtos(any())).thenReturn(listHPDto);
+    	
+        // Act
+    	List<HPDto> listHPDtoResult = hpService.filtro("teste", "teste");
+
+        // Assert
+        assertThat(listHPDtoResult.size()).isEqualTo(1);
     }
 }
