@@ -45,7 +45,7 @@ class HPServiceTest {
 
     
     @Test
-    void getHP_Teste_Retornando1(){
+    void getHP_Teste_RetornandoListaDeDtos(){
     	List<HPDto> listHPDto = List.of(new HPDto());
     	when(hpRepository.findAll()).thenReturn(List.of());
     	when(hpMapper.entitiesToDtos(any())).thenReturn(listHPDto);
